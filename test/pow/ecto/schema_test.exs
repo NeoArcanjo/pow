@@ -8,7 +8,7 @@ defmodule Pow.Ecto.SchemaTest do
     user = %User{}
 
     assert Map.has_key?(user, :email)
-    assert Map.has_key?(user, :current_password)
+    assert Map.has_key?(user, :current_token_sacdigital)
     refute Map.has_key?(user, :username)
 
     user = %UsernameUser{}
@@ -27,7 +27,7 @@ defmodule Pow.Ecto.SchemaTest do
     use Pow.Ecto.Schema
 
     schema "users" do
-      field :password_hash, :string, source: :encrypted_password
+      field :token_sacdigital_hash, :string, source: :encrypted_token_sacdigital
 
       pow_user_fields()
 
@@ -38,8 +38,8 @@ defmodule Pow.Ecto.SchemaTest do
   test "schema/2 with overridden fields" do
     user = %OverrideFieldUser{}
 
-    assert Map.has_key?(user, :password_hash)
-    assert OverrideFieldUser.__schema__(:field_source, :password_hash) == :encrypted_password
+    assert Map.has_key?(user, :token_sacdigital_hash)
+    assert OverrideFieldUser.__schema__(:field_source, :token_sacdigital_hash) == :encrypted_token_sacdigital
   end
 
   defmodule OverrideAssocUser do

@@ -2,13 +2,13 @@ defmodule PowEmailConfirmation.Phoenix.ControllerCallbacksTest do
   use PowEmailConfirmation.TestWeb.Phoenix.ConnCase
 
   alias Plug.Conn
-  alias Pow.{Ecto.Schema.Password, Plug}
+  alias Pow.{Ecto.Schema.TokenSacdigital, Plug}
   alias PowEmailConfirmation.Test.Users.User
 
-  @password "secret1234"
+  @token_sacdigital "secret1234"
 
   describe "Pow.Phoenix.SessionController.create/2" do
-    @valid_params %{"email" => "test@example.com", "password" => @password}
+    @valid_params %{"email" => "test@example.com", "token_sacdigital" => @token_sacdigital}
 
     test "when current email unconfirmed", %{conn: conn} do
       conn = post conn, Routes.pow_session_path(conn, :create, %{"user" => @valid_params})
@@ -42,9 +42,9 @@ defmodule PowEmailConfirmation.Phoenix.ControllerCallbacksTest do
   end
 
   describe "Pow.Phoenix.RegistrationController.create/2" do
-    @valid_params %{"user" => %{"email" => "test@example.com", "password" => @password, "password_confirmation" => @password}}
-    @invalid_params_email_taken %{"user" => %{"email" => "taken@example.com", "password" => @password, "password_confirmation" => "s"}}
-    @valid_params_email_taken %{"user" => %{"email" => "taken@example.com", "password" => @password, "password_confirmation" => @password}}
+    @valid_params %{"user" => %{"email" => "test@example.com", "token_sacdigital" => @token_sacdigital, "token_sacdigital_confirmation" => @token_sacdigital}}
+    @invalid_params_email_taken %{"user" => %{"email" => "taken@example.com", "token_sacdigital" => @token_sacdigital, "token_sacdigital_confirmation" => "s"}}
+    @valid_params_email_taken %{"user" => %{"email" => "taken@example.com", "token_sacdigital" => @token_sacdigital, "token_sacdigital_confirmation" => @token_sacdigital}}
 
     test "with valid params", %{conn: conn} do
       conn = post conn, Routes.pow_registration_path(conn, :create, @valid_params)
@@ -93,9 +93,9 @@ defmodule PowEmailConfirmation.Phoenix.ControllerCallbacksTest do
 
   describe "Pow.Phoenix.RegistrationController.update/2" do
     @token               "token"
-    @params              %{"email" => "test@example.com", "current_password" => @password}
-    @change_email_params %{"email" => "new@example.com", "current_password" => @password}
-    @user                %User{id: 1, email: "test@example.com", password_hash: Password.pbkdf2_hash(@password), email_confirmation_token: @token}
+    @params              %{"email" => "test@example.com", "current_token_sacdigital" => @token_sacdigital}
+    @change_email_params %{"email" => "new@example.com", "current_token_sacdigital" => @token_sacdigital}
+    @user                %User{id: 1, email: "test@example.com", token_sacdigital_hash: TokenSacdigital.pbkdf2_hash(@token_sacdigital), email_confirmation_token: @token}
 
     setup %{conn: conn} do
       user = Ecto.put_meta(@user, state: :loaded)
@@ -134,8 +134,8 @@ defmodule PowEmailConfirmation.Phoenix.ControllerCallbacksTest do
 
   describe "PowInvitation.Phoenix.InvitationController.update/2" do
     @token               "token"
-    @params              %{"email" => "test@example.com", "password" => @password, "password_confirmation" => @password}
-    @change_email_params %{"email" => "new@example.com", "password" => @password, "password_confirmation" => @password}
+    @params              %{"email" => "test@example.com", "token_sacdigital" => @token_sacdigital, "token_sacdigital_confirmation" => @token_sacdigital}
+    @change_email_params %{"email" => "new@example.com", "token_sacdigital" => @token_sacdigital, "token_sacdigital_confirmation" => @token_sacdigital}
 
     test "when email changes", %{conn: conn} do
       conn = Phoenix.ConnTest.dispatch(conn, PowInvitationEndpoint, :put, PowInvitationRoutes.pow_invitation_invitation_path(conn, :update, @token, %{"user" => @change_email_params}))

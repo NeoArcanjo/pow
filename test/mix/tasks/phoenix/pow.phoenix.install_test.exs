@@ -47,17 +47,17 @@ defmodule Mix.Tasks.Pow.Phoenix.InstallTest do
   end
 
   test "with extension templates" do
-    options = @options ++ ~w(--templates --extension PowResetPassword --extension PowEmailConfirmation)
+    options = @options ++ ~w(--templates --extension PowResetTokenSacdigital --extension PowEmailConfirmation)
 
     File.cd!(@tmp_path, fn ->
       Install.run(options)
 
       assert File.exists?(@templates_path)
-      reset_password_templates = Path.join(["lib", "pow_web", "templates", "pow_reset_password"])
-      assert [_one] = File.ls!(reset_password_templates)
-      reset_password_views = Path.join(["lib", "pow_web", "views", "pow_reset_password"])
-      assert File.exists?(reset_password_views)
-      assert [_one] = File.ls!(reset_password_views)
+      reset_token_sacdigital_templates = Path.join(["lib", "pow_web", "templates", "pow_reset_token_sacdigital"])
+      assert [_one] = File.ls!(reset_token_sacdigital_templates)
+      reset_token_sacdigital_views = Path.join(["lib", "pow_web", "views", "pow_reset_token_sacdigital"])
+      assert File.exists?(reset_token_sacdigital_views)
+      assert [_one] = File.ls!(reset_token_sacdigital_views)
     end)
   end
 
@@ -145,7 +145,7 @@ defmodule Mix.Tasks.Pow.Phoenix.InstallTest do
 
     test "uses namespace for context and web module names" do
       File.cd!(@tmp_path, fn ->
-        Install.run(~w(--templates --extension PowResetPassword))
+        Install.run(~w(--templates --extension PowResetTokenSacdigital))
 
         assert_received {:mix_shell, :info, [@expected_msg <> msg]}
         assert msg =~ "user: POW.Users.User,"
@@ -159,15 +159,15 @@ defmodule Mix.Tasks.Pow.Phoenix.InstallTest do
         assert File.exists?(view_file)
         assert File.read!(view_file) =~ "defmodule POWWeb.Pow.SessionView do"
 
-        view_file = Path.join(["lib", "pow_web", "views", "pow_reset_password", "reset_password_view.ex"])
+        view_file = Path.join(["lib", "pow_web", "views", "pow_reset_token_sacdigital", "reset_token_sacdigital_view.ex"])
         assert File.exists?(view_file)
-        assert File.read!(view_file) =~ "defmodule POWWeb.PowResetPassword.ResetPasswordView do"
+        assert File.read!(view_file) =~ "defmodule POWWeb.PowResetTokenSacdigital.ResetTokenSacdigitalView do"
       end)
     end
   end
 
   test "uses web app inside Phoenix umbrella app" do
-    options = @options ++ ~w(--templates --extension PowResetPassword --extension PowEmailConfirmation)
+    options = @options ++ ~w(--templates --extension PowResetTokenSacdigital --extension PowEmailConfirmation)
     File.cd!(@tmp_path, fn ->
       File.write!("mix.exs", """
       defmodule MyAppWeb.MixProject do
@@ -202,8 +202,8 @@ defmodule Mix.Tasks.Pow.Phoenix.InstallTest do
         assert File.exists?(Path.join(["lib", "my_app_web", "templates", "pow"]))
         assert File.exists?(Path.join(["lib", "my_app_web", "views", "pow"]))
 
-        assert File.exists?(Path.join(["lib", "my_app_web", "templates", "pow_reset_password"]))
-        assert File.exists?(Path.join(["lib", "my_app_web", "views", "pow_reset_password"]))
+        assert File.exists?(Path.join(["lib", "my_app_web", "templates", "pow_reset_token_sacdigital"]))
+        assert File.exists?(Path.join(["lib", "my_app_web", "views", "pow_reset_token_sacdigital"]))
       end)
     end)
   end

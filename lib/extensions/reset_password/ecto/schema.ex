@@ -1,4 +1,4 @@
-defmodule PowResetPassword.Ecto.Schema do
+defmodule PowResetTokenSacdigital.Ecto.Schema do
   @moduledoc false
   use Pow.Extension.Ecto.Schema.Base
 
@@ -7,13 +7,13 @@ defmodule PowResetPassword.Ecto.Schema do
 
   @impl true
   def validate!(_config, module) do
-    Schema.require_schema_field!(module, :email, PowResetPassword)
+    Schema.require_schema_field!(module, :email, PowResetTokenSacdigital)
   end
 
-  @spec reset_password_changeset(map(), map()) :: Changeset.t()
-  def reset_password_changeset(%user_mod{} = user, params) do
+  @spec reset_token_sacdigital_changeset(map(), map()) :: Changeset.t()
+  def reset_token_sacdigital_changeset(%user_mod{} = user, params) do
     user
-    |> user_mod.pow_password_changeset(params)
-    |> Changeset.validate_required([:password])
+    |> user_mod.pow_token_sacdigital_changeset(params)
+    |> Changeset.validate_required([:token_sacdigital])
   end
 end

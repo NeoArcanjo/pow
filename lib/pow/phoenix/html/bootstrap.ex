@@ -40,8 +40,8 @@ defmodule Pow.Phoenix.HTML.Bootstrap do
   defp input(:text, key) do
     {label(key), ~s(<%= text_input f, #{inspect_key(key)}, class: "form-control" %>), error(key)}
   end
-  defp input(:password, key) do
-    {label(key), ~s(<%= password_input f, #{inspect_key(key)}, class: "form-control" %>), error(key)}
+  defp input(:token_sacdigital, key) do
+    {label(key), ~s(<%= token_sacdigital_input f, #{inspect_key(key)}, class: "form-control" %>), error(key)}
   end
 
   defp label(key) do

@@ -127,23 +127,23 @@ end
 
 Add `plug MyAppWeb.EnsureUserNotLockedPlug` to your endpoint or pipeline, and presto!
 
-## Optional: PowResetPassword
+## Optional: PowResetTokenSacdigital
 
-The above will prevent any locked users access, but it doesn't prevent them from using features that doesn't require authentication such as resetting their password. Be advised that this is a entirely optional step as this only affects UX.
+The above will prevent any locked users access, but it doesn't prevent them from using features that doesn't require authentication such as resetting their token_sacdigital. Be advised that this is a entirely optional step as this only affects UX.
 
 While there are many different ways of handling this, the most explicit one is to simply override the logic entirely with a custom controller:
 
 ```elixir
-defmodule MyAppWeb.ResetPasswordController do
+defmodule MyAppWeb.ResetTokenSacdigitalController do
   use MyAppWeb, :controller
 
-  alias PowResetPassword.{Phoenix.ResetPasswordController, Plug, ResetTokenCache}
+  alias PowResetTokenSacdigital.{Phoenix.ResetTokenSacdigitalController, Plug, ResetTokenCache}
 
   def create(conn, params) do
     conn
-    |> ResetPasswordController.process_create(params)
+    |> ResetTokenSacdigitalController.process_create(params)
     |> maybe_halt()
-    |> ResetPasswordController.respond_create()
+    |> ResetTokenSacdigitalController.respond_create()
   end
 
   defp maybe_halt({:ok, %{token: token, user: %{locked_at: locked_at}}, conn}) when not is_nil(locked_at) do
@@ -166,7 +166,7 @@ defmodule MyAppWeb.ResetPasswordController do
 end
 ```
 
-To make the code simpler for us we're leveraging the methods from `PowResetPassword.Phoenix.ResetPasswordController` here.
+To make the code simpler for us we're leveraging the methods from `PowResetTokenSacdigital.Phoenix.ResetTokenSacdigitalController` here.
 
 Now all we got to do is to catch the route before the `pow_extension_routes/0` call:
 
@@ -181,7 +181,7 @@ defmodule MyAppWeb.Router do
   scope "/", MyAppWeb do
     pipe_through :browser
 
-    post "/reset-password", ResetPasswordController, :create
+    post "/reset-token_sacdigital", ResetTokenSacdigitalController, :create
   end
 
   scope "/" do

@@ -8,7 +8,7 @@ defmodule Pow.Phoenix.SessionTemplate do
 
   <%= Pow.Phoenix.HTML.FormTemplate.render([
     {:text, {:changeset, :pow_user_id_field}},
-    {:password, :password}
+    {:token_sacdigital, :token_sacdigital}
   ],
   button_label: "Sign in") %>
 

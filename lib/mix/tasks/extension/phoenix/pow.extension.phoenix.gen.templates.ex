@@ -4,9 +4,9 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Gen.Templates do
   @moduledoc """
   Generates views and templates for extensions.
 
-      mix pow.extension.phoenix.gen.templates --extension PowResetPassword --extension PowEmailConfirmation
+      mix pow.extension.phoenix.gen.templates --extension PowResetTokenSacdigital --extension PowEmailConfirmation
 
-      mix pow.extension.phoenix.gen.templates --context-app my_app --extension PowResetPassword
+      mix pow.extension.phoenix.gen.templates --context-app my_app --extension PowResetTokenSacdigital
 
   ## Arguments
 
@@ -33,8 +33,8 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Gen.Templates do
   end
 
   @extension_templates %{
-    PowResetPassword => [
-      {"reset_password", ~w(new edit)}
+    PowResetTokenSacdigital => [
+      {"reset_token_sacdigital", ~w(new edit)}
     ],
     PowInvitation => [
       {"invitation", ~w(new show edit)}

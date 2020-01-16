@@ -1,13 +1,13 @@
 defmodule PowEmailConfirmation.Test.RepoMock do
   @moduledoc false
-  alias Pow.Ecto.Schema.Password
+  alias Pow.Ecto.Schema.TokenSacdigital
   alias PowEmailConfirmation.Test.Users.User
 
   defp user() do
     Ecto.put_meta(%User{
       id: 1,
       email: "test@example.com",
-      password_hash: Password.pbkdf2_hash("secret1234"),
+      token_sacdigital_hash: TokenSacdigital.pbkdf2_hash("secret1234"),
       email_confirmation_token: "valid"
     }, state: :loaded)
   end

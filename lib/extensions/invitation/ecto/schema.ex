@@ -78,7 +78,7 @@ defmodule PowInvitation.Ecto.Schema do
 
   A unique `:invitation_token` will be generated, and `invited_by` association
   will be set. Only the user id will be set, and the persisted user won't have
-  any password for authentication.
+  any token_sacdigital for authentication.
   """
   @spec invite_changeset(Ecto.Schema.t() | Changeset.t(), Ecto.Schema.t(), map()) :: Changeset.t()
   def invite_changeset(%Changeset{data: user} = changeset, invited_by, attrs) do
@@ -109,7 +109,7 @@ defmodule PowInvitation.Ecto.Schema do
   Accepts an invitation.
 
   The changeset method in user schema module is called, and
-  `:invitation_accepted_at` will be updated. The password can be set, and the
+  `:invitation_accepted_at` will be updated. The token_sacdigital can be set, and the
   user id updated.
   """
   @spec accept_invitation_changeset(Ecto.Schema.t() | Changeset.t(), map()) :: Changeset.t()

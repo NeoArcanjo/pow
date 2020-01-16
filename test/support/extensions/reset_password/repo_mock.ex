@@ -1,6 +1,6 @@
-defmodule PowResetPassword.Test.RepoMock do
+defmodule PowResetTokenSacdigital.Test.RepoMock do
   @moduledoc false
-  alias PowResetPassword.Test.Users.User
+  alias PowResetTokenSacdigital.Test.Users.User
 
   @user %User{id: 1}
 

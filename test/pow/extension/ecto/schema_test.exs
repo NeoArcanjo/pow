@@ -106,11 +106,11 @@ defmodule Pow.Extension.Ecto.SchemaTest do
     assert %Ecto.Association.Has{cardinality: :many, queryable: User, related_key: :parent_id} = User.__schema__(:association, :children)
   end
 
-  @password "secret1234"
+  @token_sacdigital "secret1234"
   @valid_params %{
     "email" => "john.doe@example.com",
-    "password" => @password,
-    "password_confirmation" => @password,
+    "token_sacdigital" => @token_sacdigital,
+    "token_sacdigital_confirmation" => @token_sacdigital,
     "custom" => "valid"
   }
 

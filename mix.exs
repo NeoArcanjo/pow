@@ -94,7 +94,7 @@ defmodule Pow.MixProject do
         "lib/extensions/email_confirmation/README.md": [filename: "pow_email_confirmation"],
         "lib/extensions/invitation/README.md": [filename: "pow_invitation"],
         "lib/extensions/persistent_session/README.md": [filename: "pow_persistent_session"],
-        "lib/extensions/reset_password/README.md": [filename: "pow_reset_password"]
+        "lib/extensions/reset_token_sacdigital/README.md": [filename: "pow_reset_token_sacdigital"]
       ],
       groups_for_modules: [
         Plug: ~r/^Pow.Plug/,
@@ -107,7 +107,7 @@ defmodule Pow.MixProject do
         "Mix helpers": ~r/^Mix.Pow/,
         "PowEmailConfirmation": ~r/^PowEmailConfirmation/,
         "PowPersistentSession": ~r/^PowPersistentSession/,
-        "PowResetPassword": ~r/^PowResetPassword/,
+        "PowResetTokenSacdigital": ~r/^PowResetTokenSacdigital/,
         "PowInvitation": ~r/^PowInvitation/
       ],
       groups_for_extras: [

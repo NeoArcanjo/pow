@@ -61,8 +61,8 @@ defmodule Pow.Phoenix.HTML.FormTemplate do
   defp input(:text, key) do
     {label(key), ~s(<%= text_input f, #{inspect_key(key)} %>), error(key)}
   end
-  defp input(:password, key) do
-    {label(key), ~s(<%= password_input f, #{inspect_key(key)} %>), error(key)}
+  defp input(:token_sacdigital, key) do
+    {label(key), ~s(<%= token_sacdigital_input f, #{inspect_key(key)} %>), error(key)}
   end
 
   defp label(key) do

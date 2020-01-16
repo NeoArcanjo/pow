@@ -8,13 +8,13 @@
   * `Pow.Ecto.Context.authenticate/2`
   * `PowEmailConfirmation.Ecto.Context.get_by_confirmation_token/2`
   * `PowInvitation.Ecto.Context.get_by_invitation_token/2`
-  * `PowResetPassword.Ecto.Context.get_by_email/2`
-* [`Pow.Ecto.Schema.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_password_changeset/3` now adds the default `Ecto.Changeset.validate_confirmation/3` error instead of the previous `not same as password` error
-* [`Pow.Ecto.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_password_changeset/3` now uses the `Ecto.Changeset.validate_confirmation/3` for validation and expects `:password_confirmation` instead of `:confirm_password` in params
-* [`Pow.Ecto.Schema`] No longer adds `:confirm_password` virtual field
-* [`PowInvitation.Phoenix.InvitationView`] Now renders `:password_confirmation` field instead of `:confirm_password`
-* [`PowResetPassword.Phoenix.ResetPasswordView`] Now renders `:password_confirmation` field instead of `:confirm_password`
-* [`Pow.Phoenix.RegistrationView`] Now renders `:password_confirmation` field instead of `:confirm_password`
+  * `PowResettoken_sacdigital.Ecto.Context.get_by_email/2`
+* [`Pow.Ecto.Schema.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_token_sacdigital_changeset/3` now adds the default `Ecto.Changeset.validate_confirmation/3` error instead of the previous `not same as token_sacdigital` error
+* [`Pow.Ecto.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_token_sacdigital_changeset/3` now uses the `Ecto.Changeset.validate_confirmation/3` for validation and expects `:token_sacdigital_confirmation` instead of `:confirm_token_sacdigital` in params
+* [`Pow.Ecto.Schema`] No longer adds `:confirm_token_sacdigital` virtual field
+* [`PowInvitation.Phoenix.InvitationView`] Now renders `:token_sacdigital_confirmation` field instead of `:confirm_token_sacdigital`
+* [`PowResettoken_sacdigital.Phoenix.Resettoken_sacdigitalView`] Now renders `:token_sacdigital_confirmation` field instead of `:confirm_token_sacdigital`
+* [`Pow.Phoenix.RegistrationView`] Now renders `:token_sacdigital_confirmation` field instead of `:confirm_token_sacdigital`
 * [`PowEmailConfirmation.Ecto.Schema`] No longer validates if `:email` has been taken before setting `:unconfirmed_email`
 * [`PowEmailConfirmation.Phoenix.ControllerCallbacks`] Now prevents user enumeration attack for `PowInvitation.Phoenix.InvitationController.create/2`
 * [`PowPersistentSession.Plug.Cookie`] Changed default cookie name to `persistent_session`
@@ -22,11 +22,11 @@
 
 ## Removed
 
-* [`PowResetPassword.Phoenix.ResetPasswordController`] Will now by default prevent information leak, but can be disabled if `pow_prevent_information_leak: false` is set in `conn.private`.
+* [`PowResettoken_sacdigital.Phoenix.Resettoken_sacdigitalController`] Will now by default prevent information leak, but can be disabled if `pow_prevent_information_leak: false` is set in `conn.private`.
 
 ### Deprecations
 
-* [`Pow.Ecto.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_password_changeset/3` has deprecated use of `:confirm_password` in params in favor of `:password_confirmation`
+* [`Pow.Ecto.Changeset`] `Pow.Ecto.Schema.Changeset.confirm_token_sacdigital_changeset/3` has deprecated use of `:confirm_token_sacdigital` in params in favor of `:token_sacdigital_confirmation`
 
 ## v1.0.16 (2020-01-07)
 
@@ -35,9 +35,9 @@
 ### Enhancements
 
 * [`PowPersistentSession.Plug.Cookie`] Now supports `:persistent_session_cookie_opts` to customize any options that will be passed on to `Plug.Conn.put_resp_cookie/4`
-* [`PowResetPassword.Phoenix.ResetPasswordController`] Now uses `PowResetPassword.Phoenix.Messages.maybe_email_has_been_sent/1` with a generic response that tells the user the email has been sent only if an account was found
-* [`PowResetPassword.Phoenix.ResetPasswordController`] When a user doesn't exist will now return success message if `PowEmailConfirmation` extension is enabled
-* [`PowResetPassword.Phoenix.Messages`] Added `PowResetPassword.Phoenix.Messages.maybe_email_has_been_sent/1` and let `PowResetPassword.Phoenix.Messages.email_has_been_sent/1` fall back to it
+* [`PowResettoken_sacdigital.Phoenix.Resettoken_sacdigitalController`] Now uses `PowResettoken_sacdigital.Phoenix.Messages.maybe_email_has_been_sent/1` with a generic response that tells the user the email has been sent only if an account was found
+* [`PowResettoken_sacdigital.Phoenix.Resettoken_sacdigitalController`] When a user doesn't exist will now return success message if `PowEmailConfirmation` extension is enabled
+* [`PowResettoken_sacdigital.Phoenix.Messages`] Added `PowResettoken_sacdigital.Phoenix.Messages.maybe_email_has_been_sent/1` and let `PowResettoken_sacdigital.Phoenix.Messages.email_has_been_sent/1` fall back to it
 * [`PowEmailConfirmation.Phoenix.ControllerCallbacks`] When a user tries to sign up and the email has already been taken the default e-mail confirmation required message will be shown
 * [`Pow.Plug.Session`] Now renews the Plug session each time the Pow session is created or rolled
 
@@ -63,7 +63,7 @@
   * Added `PowEmailConfirmation` module
   * Added `PowInvitation` module
   * Added `PowPersistentSession` module
-  * Added `PowResetPassword` module
+  * Added `PowResettoken_sacdigital` module
 * [`PowPersistentSession.Plug.Cookie`] Added support for custom metadata:
   * `PowPersistentSession.Plug.Cookie.create/3` now stores a metadata keyword list that can be populated
   * `PowPersistentSession.Plug.Cookie.create/3` will now, instead of adding `:session_fingerprint` to the metadata, populate the `:session_metadata` keyword list with `:fingerprint`
@@ -83,7 +83,7 @@
 
 ### Changes
 
-* Changed minmum password length to 8 (OWASP/NIST recommendations)
+* Changed minmum token_sacdigital length to 8 (OWASP/NIST recommendations)
 * `Pow.Phoenix.Router` now only filters routes that has equal number of bindings
 * `Pow.Phoenix.Routes.user_not_authenticated_path/1` now only puts the `:request_path` param if the request is using "GET" method
 * The stores has been refactored so the command conforms with ETS store. This means that put commands now accept `{key, value}` record element(s), and keys may be list for easier lookup.
@@ -114,8 +114,8 @@
 * `PowPersistentSession.Plug.Cookie.create/3` will use the value of `conn.private[:pow_session_metadata][:fingerprint]` if it exists as `:session_fingerprint` in the persistent session metadata
 * `PowPersistentSession.Plug.Cookie.authenticate/2` will assign `:fingerprint` to `conn.private[:pow_session_metadata]` if it exists in the persistent session metadata
 * `Pow.Store.CredentialsCache.put/3` will invalidate any other sessions with the same `:fingerprint` if any is set in session metadata
-* `PowResetPassword.Phoenix.ResetPasswordController.create/2` when a user doesn't exist will now only return success message if the registration routes has been disabled, otherwise the form with an error message will be returned
-* Added `PowResetPassword.Phoenix.Messages.user_not_found/1`
+* `PowResettoken_sacdigital.Phoenix.Resettoken_sacdigitalController.create/2` when a user doesn't exist will now only return success message if the registration routes has been disabled, otherwise the form with an error message will be returned
+* Added `PowResettoken_sacdigital.Phoenix.Messages.user_not_found/1`
 
 ### Bug fixes
 
@@ -149,10 +149,10 @@
 ## v1.0.12 (2019-08-16)
 
 * Added API integration guide
-* Added `:reset_password_token_store` configuration setting
-* To prevent timing attacks, `Pow.Ecto.Context.authenticate/2` now verifies password on a blank user struct when no user can be found for the provided user id, but will always return nil. The blank user struct has a nil `:password_hash` value. The struct will be passed along with a blank password to the `verify_password/2` method in the user schema module.
-* To prevent timing attacks, when `Pow.Ecto.Schema.Changeset.verify_password/3` receives a struct with a nil `:password_hash` value, it'll hash a blank password, but always return false.
-* To prevent timing attacks, the UUID is always generated in `PowResetPassword.Plug.create_reset_token/2` whether the user exists or not.
+* Added `:reset_token_sacdigital_token_store` configuration setting
+* To prevent timing attacks, `Pow.Ecto.Context.authenticate/2` now verifies token_sacdigital on a blank user struct when no user can be found for the provided user id, but will always return nil. The blank user struct has a nil `:token_sacdigital_hash` value. The struct will be passed along with a blank token_sacdigital to the `verify_token_sacdigital/2` method in the user schema module.
+* To prevent timing attacks, when `Pow.Ecto.Schema.Changeset.verify_token_sacdigital/3` receives a struct with a nil `:token_sacdigital_hash` value, it'll hash a blank token_sacdigital, but always return false.
+* To prevent timing attacks, the UUID is always generated in `PowResettoken_sacdigital.Plug.create_reset_token/2` whether the user exists or not.
 * `PowPersistentSession.Plug.Base` now accepts `:persistent_session_ttl` which will pass the TTL to the cache backend and used for the max age of the sesion cookie in `PowPersistentSession.Plug.Cookie`
 * Deprecated `:persistent_session_cookie_max_age` configuration setting
 * `Pow.Store.Backend.MnesiaCache` can now auto join clusters
@@ -176,7 +176,7 @@
 
 * `Pow.Phoenix.Router` will now only add specific routes if there is no matching route already defined
 * Added `Pow.Plug.get_plug/1` and instead of `:mod`, `:plug` is used in config
-* `Pow.Ecto.Context.authenticate/2` now returns nil if user id or password is nil
+* `Pow.Ecto.Context.authenticate/2` now returns nil if user id or token_sacdigital is nil
 
 ### Bug fixes
 
@@ -198,7 +198,7 @@
 
 ### Bug fixes
 
-* Fixed bug in `Pow.Ecto.Schema.Changeset.current_password_changeset/3` where an exception would be thrown if the virtual `:current_password` field of the user struct was set and either the `:current_password` change was blank or identical
+* Fixed bug in `Pow.Ecto.Schema.Changeset.current_token_sacdigital_changeset/3` where an exception would be thrown if the virtual `:current_token_sacdigital` field of the user struct was set and either the `:current_token_sacdigital` change was blank or identical
 
 ### Deprecations
 
@@ -253,7 +253,7 @@
 ### Deprecations
 
 * Deprecated `Pow.Extension.Config.underscore_extension/1`
-* Deprecated `PowResetPassword.Ecto.Context.password_changeset/2`
+* Deprecated `PowResettoken_sacdigital.Ecto.Context.token_sacdigital_changeset/2`
 * Deprecated `Pow.Ecto.Schema.filter_new_fields/2`
 * Deprecated `:messages_backend_fallback` setting for extension controllers
 * Removed deprecated macro `router_helpers/1` in `Pow.Phoenix.Controller`
@@ -261,7 +261,7 @@
 ## v1.0.2 (2019-02-28)
 
 * Added flash error message about e-mail confirmation for when user changes e-mail with PowEmailConfirmation enabled
-* Added `new_password_changeset/3` and `confirm_password_changeset/3` to `Pow.Ecto.Schema.Changeset`
+* Added `new_token_sacdigital_changeset/3` and `confirm_token_sacdigital_changeset/3` to `Pow.Ecto.Schema.Changeset`
 * Redis cache store backend guide
 * Correct shell instructions for `mix pow.phoenix.gen.templates` task
 * Only load environment config in `Pow.Config.get/3` when no key is set in the provided config
@@ -270,7 +270,7 @@
 
 ### Breaking changes
 
-* `PowResetPassword.Plug.reset_password_token/1` has been removed
+* `PowResettoken_sacdigital.Plug.reset_token_sacdigital_token/1` has been removed
 
 ## v1.0.1 (2019-01-27)
 

@@ -2,20 +2,20 @@ defmodule Pow.Ecto.Schema.ChangesetTest do
   use Pow.Test.Ecto.TestCase
   doctest Pow.Ecto.Schema.Changeset
 
-  alias Pow.Ecto.Schema.{Changeset, Password}
+  alias Pow.Ecto.Schema.{Changeset, TokenSacdigital}
   alias Pow.Test.Ecto.{Repo, Users.User, Users.UsernameUser}
 
   describe "User.changeset/2" do
     @valid_params %{
       "email" => "john.doe@example.com",
-      "password" => "secret1234",
-      "password_confirmation" => "secret1234",
+      "token_sacdigital" => "secret1234",
+      "token_sacdigital_confirmation" => "secret1234",
       "custom" => "custom"
     }
     @valid_params_username %{
       "username" => "john.doe",
-      "password" => "secret1234",
-      "password_confirmation" => "secret1234"
+      "token_sacdigital" => "secret1234",
+      "token_sacdigital_confirmation" => "secret1234"
     }
 
     test "requires user id" do
@@ -106,107 +106,107 @@ defmodule Pow.Ecto.Schema.ChangesetTest do
       assert changeset.errors[:username] == {"has already been taken", constraint: :unique, constraint_name: "users_username_index"}
     end
 
-    test "requires password when password_hash is nil" do
-      params = Map.delete(@valid_params, "password")
+    test "requires token_sacdigital when token_sacdigital_hash is nil" do
+      params = Map.delete(@valid_params, "token_sacdigital")
       changeset = User.changeset(%User{}, params)
 
       refute changeset.valid?
-      assert changeset.errors[:password] == {"can't be blank", [validation: :required]}
+      assert changeset.errors[:token_sacdigital] == {"can't be blank", [validation: :required]}
 
-      password = "secret"
-      user = %User{password_hash: Password.pbkdf2_hash(password)}
-      params = Map.put(@valid_params, "current_password", password)
+      token_sacdigital = "secret"
+      user = %User{token_sacdigital_hash: TokenSacdigital.pbkdf2_hash(token_sacdigital)}
+      params = Map.put(@valid_params, "current_token_sacdigital", token_sacdigital)
       changeset = User.changeset(user, params)
 
       assert changeset.valid?
     end
 
-    test "validates length of password" do
-      changeset = User.changeset(%User{}, Map.put(@valid_params, "password", Enum.join(1..7)))
+    test "validates length of token_sacdigital" do
+      changeset = User.changeset(%User{}, Map.put(@valid_params, "token_sacdigital", Enum.join(1..7)))
 
       refute changeset.valid?
-      assert changeset.errors[:password] == {"should be at least %{count} character(s)", [count: 8, validation: :length, kind: :min, type: :string]}
+      assert changeset.errors[:token_sacdigital] == {"should be at least %{count} character(s)", [count: 8, validation: :length, kind: :min, type: :string]}
 
-      changeset = User.changeset(%User{}, Map.put(@valid_params, "password", Enum.join(1..4096)))
+      changeset = User.changeset(%User{}, Map.put(@valid_params, "token_sacdigital", Enum.join(1..4096)))
       refute changeset.valid?
-      assert changeset.errors[:password] == {"should be at most %{count} character(s)", [count: 4096, validation: :length, kind: :max, type: :string]}
+      assert changeset.errors[:token_sacdigital] == {"should be at most %{count} character(s)", [count: 4096, validation: :length, kind: :max, type: :string]}
     end
 
-    test "can use custom length requirements for password" do
-      config = [password_min_length: 5, password_max_length: 10]
+    test "can use custom length requirements for token_sacdigital" do
+      config = [token_sacdigital_min_length: 5, token_sacdigital_max_length: 10]
 
-      changeset = Changeset.password_changeset(%User{}, %{"password" => "abcd"}, config)
+      changeset = Changeset.token_sacdigital_changeset(%User{}, %{"token_sacdigital" => "abcd"}, config)
       refute changeset.valid?
-      assert changeset.errors[:password] == {"should be at least %{count} character(s)", [count: 5, validation: :length, kind: :min, type: :string]}
+      assert changeset.errors[:token_sacdigital] == {"should be at least %{count} character(s)", [count: 5, validation: :length, kind: :min, type: :string]}
 
-      changeset = Changeset.password_changeset(%User{}, %{"password" => "abcdefghijk"}, config)
+      changeset = Changeset.token_sacdigital_changeset(%User{}, %{"token_sacdigital" => "abcdefghijk"}, config)
       refute changeset.valid?
-      assert changeset.errors[:password] == {"should be at most %{count} character(s)", [count: 10, validation: :length, kind: :max, type: :string]}
+      assert changeset.errors[:token_sacdigital] == {"should be at most %{count} character(s)", [count: 10, validation: :length, kind: :max, type: :string]}
     end
 
-    test "can confirm and hash password" do
-      changeset = User.changeset(%User{}, Map.put(@valid_params, "password_confirmation", "invalid"))
+    test "can confirm and hash token_sacdigital" do
+      changeset = User.changeset(%User{}, Map.put(@valid_params, "token_sacdigital_confirmation", "invalid"))
 
       refute changeset.valid?
-      assert changeset.errors[:password_confirmation] == {"does not match confirmation", [validation: :confirmation]}
-      refute changeset.changes[:password_hash]
+      assert changeset.errors[:token_sacdigital_confirmation] == {"does not match confirmation", [validation: :confirmation]}
+      refute changeset.changes[:token_sacdigital_hash]
 
       changeset = User.changeset(%User{}, @valid_params)
 
       assert changeset.valid?
-      assert changeset.changes[:password_hash]
-      assert Password.pbkdf2_verify("secret1234", changeset.changes[:password_hash])
+      assert changeset.changes[:token_sacdigital_hash]
+      assert TokenSacdigital.pbkdf2_verify("secret1234", changeset.changes[:token_sacdigital_hash])
     end
 
     # TODO: Remove by 1.1.0
-    test "handle `confirm_password` conversion" do
+    test "handle `confirm_token_sacdigital` conversion" do
       params =
         @valid_params
-        |> Map.delete("password_confirmation")
-        |> Map.put("confirm_password", "secret1234")
+        |> Map.delete("token_sacdigital_confirmation")
+        |> Map.put("confirm_token_sacdigital", "secret1234")
       changeset = User.changeset(%User{}, params)
 
       assert changeset.valid?
 
-      params    = Map.put(params, "confirm_password", "invalid")
+      params    = Map.put(params, "confirm_token_sacdigital", "invalid")
       changeset = User.changeset(%User{}, params)
 
       refute changeset.valid?
-      assert changeset.errors[:confirm_password] == {"does not match confirmation", [validation: :confirmation]}
-      refute changeset.errors[:password_confirmation]
+      assert changeset.errors[:confirm_token_sacdigital] == {"does not match confirmation", [validation: :confirmation]}
+      refute changeset.errors[:token_sacdigital_confirmation]
     end
 
-    test "can use custom password hash methods" do
-      password_hash = &(&1 <> "123")
-      password_verify = &(&1 == &2 <> "123")
-      config = [password_hash_methods: {password_hash, password_verify}]
+    test "can use custom token_sacdigital hash methods" do
+      token_sacdigital_hash = &(&1 <> "123")
+      token_sacdigital_verify = &(&1 == &2 <> "123")
+      config = [token_sacdigital_hash_methods: {token_sacdigital_hash, token_sacdigital_verify}]
 
-      changeset = Changeset.password_changeset(%User{}, @valid_params, config)
+      changeset = Changeset.token_sacdigital_changeset(%User{}, @valid_params, config)
 
       assert changeset.valid?
-      assert changeset.changes[:password_hash] == "secret1234123"
+      assert changeset.changes[:token_sacdigital_hash] == "secret1234123"
     end
 
-    test "requires current password when password_hash exists" do
-      user = %User{password_hash: Password.pbkdf2_hash("secret1234")}
+    test "requires current token_sacdigital when token_sacdigital_hash exists" do
+      user = %User{token_sacdigital_hash: TokenSacdigital.pbkdf2_hash("secret1234")}
 
       changeset = User.changeset(%User{}, @valid_params)
       assert changeset.valid?
 
       changeset = User.changeset(user, @valid_params)
       refute changeset.valid?
-      assert changeset.errors[:current_password] == {"can't be blank", [validation: :required]}
+      assert changeset.errors[:current_token_sacdigital] == {"can't be blank", [validation: :required]}
 
-      changeset = User.changeset(%{user | current_password: "secret1234"}, @valid_params)
+      changeset = User.changeset(%{user | current_token_sacdigital: "secret1234"}, @valid_params)
       refute changeset.valid?
-      assert changeset.errors[:current_password] == {"can't be blank", [validation: :required]}
+      assert changeset.errors[:current_token_sacdigital] == {"can't be blank", [validation: :required]}
 
-      changeset = User.changeset(user, Map.put(@valid_params, "current_password", "invalid"))
+      changeset = User.changeset(user, Map.put(@valid_params, "current_token_sacdigital", "invalid"))
       refute changeset.valid?
-      assert changeset.errors[:current_password] == {"is invalid", [validation: :verify_password]}
-      assert changeset.validations[:current_password] == {:verify_password, []}
+      assert changeset.errors[:current_token_sacdigital] == {"is invalid", [validation: :verify_token_sacdigital]}
+      assert changeset.validations[:current_token_sacdigital] == {:verify_token_sacdigital, []}
 
-      changeset = User.changeset(user, Map.put(@valid_params, "current_password", "secret1234"))
+      changeset = User.changeset(user, Map.put(@valid_params, "current_token_sacdigital", "secret1234"))
       assert changeset.valid?
     end
 
@@ -218,36 +218,36 @@ defmodule Pow.Ecto.Schema.ChangesetTest do
     end
   end
 
-  describe "User.verify_password/2" do
+  describe "User.verify_token_sacdigital/2" do
     test "verifies" do
-      refute User.verify_password(%User{}, "secret1234")
+      refute User.verify_token_sacdigital(%User{}, "secret1234")
 
-      password_hash = Password.pbkdf2_hash("secret1234")
-      refute User.verify_password(%User{password_hash: password_hash}, "invalid")
-      assert User.verify_password(%User{password_hash: password_hash}, "secret1234")
+      token_sacdigital_hash = TokenSacdigital.pbkdf2_hash("secret1234")
+      refute User.verify_token_sacdigital(%User{token_sacdigital_hash: token_sacdigital_hash}, "invalid")
+      assert User.verify_token_sacdigital(%User{token_sacdigital_hash: token_sacdigital_hash}, "secret1234")
     end
 
     test "prevents timing attacks" do
       config = [
-        password_hash_methods: {
-          fn password ->
-            send(self(), {:password_hash, password})
+        token_sacdigital_hash_methods: {
+          fn token_sacdigital ->
+            send(self(), {:token_sacdigital_hash, token_sacdigital})
 
             ""
           end,
-          fn password, password_hash ->
-            send(self(), {:password_verify, password, password_hash})
+          fn token_sacdigital, token_sacdigital_hash ->
+            send(self(), {:token_sacdigital_verify, token_sacdigital, token_sacdigital_hash})
 
             false
           end
         }
       ]
 
-      refute Changeset.verify_password(%User{password_hash: nil}, "secret1234", config)
-      assert_received {:password_hash, ""}
+      refute Changeset.verify_token_sacdigital(%User{token_sacdigital_hash: nil}, "secret1234", config)
+      assert_received {:token_sacdigital_hash, ""}
 
-      refute Changeset.verify_password(%User{password_hash: "hash"}, "secret1234", config)
-      assert_received {:password_verify, "secret1234", "hash"}
+      refute Changeset.verify_token_sacdigital(%User{token_sacdigital_hash: "hash"}, "secret1234", config)
+      assert_received {:token_sacdigital_verify, "secret1234", "hash"}
     end
   end
 

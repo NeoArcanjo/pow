@@ -7,11 +7,11 @@ Some of the below is based on [OWASP](https://www.owasp.org/) or [NIST SP800-63b
 * The `user_id_field` value is always treated as case insensitive
 * If the `user_id_field` is `:email`, it'll be validated based on RFC 5322 (sections 3.2.3 and 3.4.1) and RFC 5321 with unicode characters permitted in local and domain part
 
-## Password
+## TokenSacdigital
 
-* The `:password` has a minimum length of 8 characters
-* The `:password` has a maximum length of 4096 bytes [to prevent DOS attacks against Pbkdf2](https://github.com/riverrun/pbkdf2_elixir/blob/master/lib/pbkdf2.ex#L21)
-* The `:password_hash` is generated with `PBKDF2-SHA512` with 100,000 iterations
+* The `:token_sacdigital` has a minimum length of 8 characters
+* The `:token_sacdigital` has a maximum length of 4096 bytes [to prevent DOS attacks against Pbkdf2](https://github.com/riverrun/pbkdf2_elixir/blob/master/lib/pbkdf2.ex#L21)
+* The `:token_sacdigital_hash` is generated with `PBKDF2-SHA512` with 100,000 iterations
 
 ## Session management
 
@@ -22,13 +22,13 @@ Some of the below is based on [OWASP](https://www.owasp.org/) or [NIST SP800-63b
 
 ## Timing attacks
 
-* If a user couldn't be found or the `:password_hash` is `nil` a blank password is used
-* A UUID is always generated during reset password flow
+* If a user couldn't be found or the `:token_sacdigital_hash` is `nil` a blank token_sacdigital is used
+* A UUID is always generated during reset token_sacdigital flow
 
 ## User enumeration attacks
 
 * If authentication fails, a generic `The provided login details did not work. Please verify your credentials, and try again.` message is returned
-* When password reset is requested with `PowResetPassword` for an e-mail that doesn't exist, the generic `If an account for the provided email exists, an email with reset instructions will be send to you. Please check your inbox.` message is returned
+* When token_sacdigital reset is requested with `PowResetTokenSacdigital` for an e-mail that doesn't exist, the generic `If an account for the provided email exists, an email with reset instructions will be send to you. Please check your inbox.` message is returned
 * When attempting to invite a user with `PowInvitation` using an already taken e-mail, the success message `An e-mail with invitation link has been sent.` is returned
 
 Enabling `PowEmailConfirmation` extension will add additional protection:

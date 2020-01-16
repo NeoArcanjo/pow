@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Mailer.Gen.Templates do
   @moduledoc """
   Generates mailer views and templates for extensions.
 
-      mix pow.extension.phoenix.mailer.gen.templates --extension PowEmailConfirmation --extension PowResetPassword
+      mix pow.extension.phoenix.mailer.gen.templates --extension PowEmailConfirmation --extension PowResetTokenSacdigital
 
   ## Arguments
 
@@ -31,8 +31,8 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Mailer.Gen.Templates do
   end
 
   @extension_templates %{
-    PowResetPassword => [
-      {"mailer", ~w(reset_password)}
+    PowResetTokenSacdigital => [
+      {"mailer", ~w(reset_token_sacdigital)}
     ],
     PowEmailConfirmation => [
       {"mailer", ~w(email_confirmation)}

@@ -1,4 +1,4 @@
-defmodule PowResetPassword.Phoenix.Router do
+defmodule PowResetTokenSacdigital.Phoenix.Router do
   @moduledoc false
   use Pow.Extension.Phoenix.Router.Base
 
@@ -6,8 +6,8 @@ defmodule PowResetPassword.Phoenix.Router do
 
   defmacro routes(_config) do
     quote location: :keep do
-      Router.pow_resources "/reset-password", ResetPasswordController, only: [:new, :create, :update]
-      Router.pow_route :get, "/reset-password/:id", ResetPasswordController, :edit
+      Router.pow_resources "/reset-token_sacdigital", ResetTokenSacdigitalController, only: [:new, :create, :update]
+      Router.pow_route :get, "/reset-token_sacdigital/:id", ResetTokenSacdigitalController, :edit
     end
   end
 end

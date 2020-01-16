@@ -6,8 +6,8 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Mailer.Gen.TemplatesTest do
   @tmp_path Path.join(["tmp", inspect(Templates)])
   @expected_msg "Pow mailer templates has been installed in your phoenix app!"
   @expected_template_files [
-    {PowResetPassword, %{
-      "mailer" => ["reset_password.html.eex", "reset_password.text.eex"]
+    {PowResetTokenSacdigital, %{
+      "mailer" => ["reset_token_sacdigital.html.eex", "reset_token_sacdigital.text.eex"]
     }},
     {PowEmailConfirmation, %{
       "mailer" => ["email_confirmation.html.eex", "email_confirmation.text.eex"]

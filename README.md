@@ -132,7 +132,7 @@ config :my_app, :pow,
 
 Pow is made so it's easy to extend the functionality with your own complimentary library. The following extensions are included in this library:
 
-* [PowResetPassword](lib/extensions/reset_password/README.md)
+* [PowResetTokenSacdigital](lib/extensions/reset_token_sacdigital/README.md)
 * [PowEmailConfirmation](lib/extensions/email_confirmation/README.md)
 * [PowPersistentSession](lib/extensions/persistent_session/README.md)
 * [PowInvitation](lib/extensions/invitation/README.md)
@@ -143,12 +143,12 @@ Check out the ["Other libraries"](#other-libraries) section for other extensions
 
 To keep it easy to understand and configure Pow, you'll have to enable the extensions yourself.
 
-Let's install the `PowResetPassword` and `PowEmailConfirmation` extensions.
+Let's install the `PowResetTokenSacdigital` and `PowEmailConfirmation` extensions.
 
 First, install extension migrations by running:
 
 ```bash
-mix pow.extension.ecto.gen.migrations --extension PowResetPassword --extension PowEmailConfirmation
+mix pow.extension.ecto.gen.migrations --extension PowResetTokenSacdigital --extension PowEmailConfirmation
 ```
 
 Then run the migrations with `mix ecto.migrate`. Now, update `config/config.ex` with the `:extensions` and `:controller_callbacks` key:
@@ -157,7 +157,7 @@ Then run the migrations with `mix ecto.migrate`. Now, update `config/config.ex` 
 config :my_app, :pow,
   user: MyApp.Users.User,
   repo: MyApp.Repo,
-  extensions: [PowResetPassword, PowEmailConfirmation],
+  extensions: [PowResetTokenSacdigital, PowEmailConfirmation],
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 ```
 
@@ -168,7 +168,7 @@ defmodule MyApp.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
   use Pow.Extension.Ecto.Schema,
-    extensions: [PowResetPassword, PowEmailConfirmation]
+    extensions: [PowResetTokenSacdigital, PowEmailConfirmation]
 
   # ...
 
@@ -187,7 +187,7 @@ defmodule MyAppWeb.Router do
   use MyAppWeb, :router
   use Pow.Phoenix.Router
   use Pow.Extension.Phoenix.Router,
-    extensions: [PowResetPassword, PowEmailConfirmation]
+    extensions: [PowResetTokenSacdigital, PowEmailConfirmation]
 
   # ...
 
@@ -207,7 +207,7 @@ end
 Templates and views for extensions can be generated with:
 
 ```bash
-mix pow.extension.phoenix.gen.templates --extension PowResetPassword --extension PowEmailConfirmation
+mix pow.extension.phoenix.gen.templates --extension PowResetTokenSacdigital --extension PowEmailConfirmation
 ```
 
 Please follow the instructions in ["Modify templates"](#modify-templates) to enable customization of templates and views.
@@ -243,7 +243,7 @@ config :my_app, :pow,
   mailer_backend: MyAppWeb.PowMailer
 ```
 
-This mailer module will only output the mail to your log, so you can e.g. try out the reset password and email confirmation links. You should integrate the Pow mailer with your actual mailer system. For Swoosh or Bamboo integration, check out the [Configuring mailer guide](guides/configuring_mailer.md).
+This mailer module will only output the mail to your log, so you can e.g. try out the reset token_sacdigital and email confirmation links. You should integrate the Pow mailer with your actual mailer system. For Swoosh or Bamboo integration, check out the [Configuring mailer guide](guides/configuring_mailer.md).
 
 #### Modify mailer templates
 
@@ -270,7 +270,7 @@ end
 Now generate the view and template files:
 
 ```bash
-mix pow.extension.phoenix.mailer.gen.templates --extension PowResetPassword --extension PowEmailConfirmation
+mix pow.extension.phoenix.mailer.gen.templates --extension PowResetTokenSacdigital --extension PowEmailConfirmation
 ```
 
 This will generate view files in `WEB_PATH/views/mailer/`, and html and text templates in `WEB_PATH/templates/mailer` directory.
@@ -442,7 +442,7 @@ For flash messages, you can create the following module:
 defmodule MyAppWeb.Pow.Messages do
   use Pow.Phoenix.Messages
   use Pow.Extension.Phoenix.Messages,
-    extensions: [PowResetPassword]
+    extensions: [PowResetTokenSacdigital]
 
   import MyAppWeb.Gettext
 
@@ -450,9 +450,9 @@ defmodule MyAppWeb.Pow.Messages do
 
   # Message methods for extensions has to be prepended with the snake cased
   # extension name. So the `email_has_been_sent/1` method from
-  # `PowResetPassword` is written as `pow_reset_password_email_has_been_sent/1`
+  # `PowResetTokenSacdigital` is written as `pow_reset_token_sacdigital_email_has_been_sent/1`
   # in your messages module.
-  def pow_reset_password_email_has_been_sent(_conn), do: gettext("An email with reset instructions has been sent to you. Please check your inbox.")
+  def pow_reset_token_sacdigital_email_has_been_sent(_conn), do: gettext("An email with reset instructions has been sent to you. Please check your inbox.")
 end
 ```
 
@@ -473,15 +473,15 @@ end
 
 Add `routes_backend: MyAppWeb.Pow.Routes` to your configuration. You can find all the routes in `Pow.Phoenix.Routes`.
 
-### Password hashing function
+### TokenSacdigital hashing function
 
-You can change the password hashing function easily. For example, this is how you use [comeonin with Argon2](https://github.com/riverrun/argon2_elixir):
+You can change the token_sacdigital hashing function easily. For example, this is how you use [comeonin with Argon2](https://github.com/riverrun/argon2_elixir):
 
 ```elixir
 defmodule MyApp.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema,
-    password_hash_methods: {&Argon2.hash_pwd_salt/1,
+    token_sacdigital_hash_methods: {&Argon2.hash_pwd_salt/1,
                             &Argon2.verify_pass/2}
 
   # ...

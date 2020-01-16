@@ -42,28 +42,28 @@ Mnesia will store the database files in the directory `./Mnesia.NODE` in the cur
 config :mnesia, :dir, '/path/to/dir'
 ```
 
-## OPTIONAL: Validate that strong passwords are used
+## OPTIONAL: Validate that strong token_sacdigitals are used
 
-[NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-memorized-secret-verifiers) recommends that you reject passwords that are commonly-used, expected, or compromised. The guidelines explicitly mentions the following methods to ensure strong passwords are used:
+[NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-memorized-secret-verifiers) recommends that you reject token_sacdigitals that are commonly-used, expected, or compromised. The guidelines explicitly mentions the following methods to ensure strong token_sacdigitals are used:
 
-> - Passwords obtained from previous breach corpuses.
+> - TokenSacdigitals obtained from previous breach corpuses.
 > - Dictionary words.
 > - Repetitive or sequential characters (e.g. ‘aaaaaa’, ‘1234abcd’).
 > - Context-specific words, such as the name of the service, the username, and derivatives thereof.
 
-You can read how to handle password breach lookup and other NIST based validation rules [on the powauth.com website](https://powauth.com/guides/2019-09-14-password-breach-lookup-and-other-password-validation-rules.html).
+You can read how to handle token_sacdigital breach lookup and other NIST based validation rules [on the powauth.com website](https://powauth.com/guides/2019-09-14-token_sacdigital-breach-lookup-and-other-token_sacdigital-validation-rules.html).
 
-## OPTIONAL: Use an appropriate password hash method
+## OPTIONAL: Use an appropriate token_sacdigital hash method
 
-By default PBKDF2-SHA512 with 100,000 iterations is used for password hashing. This is what's [recommended by NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-memorized-secret-verifiers). If you are allowed to use other password hashing algorithms, then Argon2id is [considered a safer option](https://medium.com/@mpreziuso/password-hashing-pbkdf2-scrypt-bcrypt-and-argon2-e25aaf41598e).
+By default PBKDF2-SHA512 with 100,000 iterations is used for token_sacdigital hashing. This is what's [recommended by NIST 800-63b](https://pages.nist.gov/800-63-3/sp800-63b.html#-5112-memorized-secret-verifiers). If you are allowed to use other token_sacdigital hashing algorithms, then Argon2id is [considered a safer option](https://medium.com/@mpreziuso/token_sacdigital-hashing-pbkdf2-scrypt-bcrypt-and-argon2-e25aaf41598e).
 
-You can easily change the password hashing method in Pow. Here's how you can use [comeonin with Argon2](https://github.com/riverrun/argon2_elixir):
+You can easily change the token_sacdigital hashing method in Pow. Here's how you can use [comeonin with Argon2](https://github.com/riverrun/argon2_elixir):
 
 ```elixir
 defmodule MyApp.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema,
-    password_hash_methods: {&Argon2.hash_pwd_salt/1,
+    token_sacdigital_hash_methods: {&Argon2.hash_pwd_salt/1,
                             &Argon2.verify_pass/2}
 
   # ...
@@ -78,7 +78,7 @@ You may also wish to [lock accounts](../guides/lock_users.md) that has had too m
 
 ## OPTIONAL: Rate limit e-mail delivery
 
-There are no rate limits for any e-mails sent out with Pow, including `PowEmailConfirmation`, `PowInvitation` and `PowResetPassword` extensions. If you use a transactional e-mail service you have to make careful considerations to prevent resource usage attacks.
+There are no rate limits for any e-mails sent out with Pow, including `PowEmailConfirmation`, `PowInvitation` and `PowResetTokenSacdigital` extensions. If you use a transactional e-mail service you have to make careful considerations to prevent resource usage attacks.
 
 Rate limitation should either be handled at the service, or you may be able to set up rate limitation in the Pow mailer. For the latter, here's a simple example using [Hammer](https://github.com/ExHammer/hammer):
 

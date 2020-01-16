@@ -22,7 +22,7 @@ Nearly everything is baked in. You won't get into annoying dependency conflicts!
 
 Pow starts out simple: Session management and user registration.
 
-But with Pow you've access to multiple extensions that covers most needs for user management: E-mail confirmation, reset password and long-term session (remember me). There's also a multi-provider library that can be used, e.g. with Twitter and Github.
+But with Pow you've access to multiple extensions that covers most needs for user management: E-mail confirmation, reset token_sacdigital and long-term session (remember me). There's also a multi-provider library that can be used, e.g. with Twitter and Github.
 
 ## Developer friendly
 

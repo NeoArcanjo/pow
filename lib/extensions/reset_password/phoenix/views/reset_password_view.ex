@@ -1,4 +1,4 @@
-defmodule PowResetPassword.Phoenix.ResetPasswordView do
+defmodule PowResetTokenSacdigital.Phoenix.ResetTokenSacdigitalView do
   @moduledoc false
   use Pow.Phoenix.View
 end

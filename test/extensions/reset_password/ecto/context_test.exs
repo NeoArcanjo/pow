@@ -1,14 +1,14 @@
-defmodule PowResetPassword.Ecto.ContextTest do
+defmodule PowResetTokenSacdigital.Ecto.ContextTest do
   use Pow.Test.Ecto.TestCase
-  doctest PowResetPassword.Ecto.Context
+  doctest PowResetTokenSacdigital.Ecto.Context
 
-  alias Pow.Ecto.Schema.Password
-  alias PowResetPassword.Ecto.Context
-  alias PowResetPassword.Test.{RepoMock, Users.User}
+  alias Pow.Ecto.Schema.TokenSacdigital
+  alias PowResetTokenSacdigital.Ecto.Context
+  alias PowResetTokenSacdigital.Test.{RepoMock, Users.User}
 
   @config [repo: RepoMock, user: User]
-  @password "secret1234"
-  @user %User{id: 1, password_hash: :set}
+  @token_sacdigital "secret1234"
+  @user %User{id: 1, token_sacdigital_hash: :set}
 
   defmodule CustomUsers do
     def get_by([email: :test]), do: %User{email: :ok}
@@ -29,18 +29,18 @@ defmodule PowResetPassword.Ecto.ContextTest do
     end
   end
 
-  describe "update_password/2" do
-    test "updates with compiled password hash methods" do
-      assert {:ok, user} = Context.update_password(@user, %{password: @password, password_confirmation: @password}, @config)
-      assert Password.pbkdf2_verify(@password, user.password_hash)
+  describe "update_token_sacdigital/2" do
+    test "updates with compiled token_sacdigital hash methods" do
+      assert {:ok, user} = Context.update_token_sacdigital(@user, %{token_sacdigital: @token_sacdigital, token_sacdigital_confirmation: @token_sacdigital}, @config)
+      assert TokenSacdigital.pbkdf2_verify(@token_sacdigital, user.token_sacdigital_hash)
     end
 
-    test "requires password input" do
-      assert {:error, changeset} = Context.update_password(@user, %{}, @config)
-      assert changeset.errors[:password] == {"can't be blank", [validation: :required]}
+    test "requires token_sacdigital input" do
+      assert {:error, changeset} = Context.update_token_sacdigital(@user, %{}, @config)
+      assert changeset.errors[:token_sacdigital] == {"can't be blank", [validation: :required]}
 
-      assert {:error, changeset} = Context.update_password(@user, %{password: "", password_confirmation: ""}, @config)
-      assert changeset.errors[:password] == {"can't be blank", [validation: :required]}
+      assert {:error, changeset} = Context.update_token_sacdigital(@user, %{token_sacdigital: "", token_sacdigital_confirmation: ""}, @config)
+      assert changeset.errors[:token_sacdigital] == {"can't be blank", [validation: :required]}
     end
   end
 end

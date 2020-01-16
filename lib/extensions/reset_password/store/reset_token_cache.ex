@@ -1,4 +1,4 @@
-defmodule PowResetPassword.Store.ResetTokenCache do
+defmodule PowResetTokenSacdigital.Store.ResetTokenCache do
   @moduledoc false
   use Pow.Store.Base,
     ttl: :timer.hours(2),

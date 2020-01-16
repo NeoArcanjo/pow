@@ -1,4 +1,4 @@
-defmodule PowResetPassword do
+defmodule PowResetTokenSacdigital do
   @moduledoc false
   use Pow.Extension.Base
 

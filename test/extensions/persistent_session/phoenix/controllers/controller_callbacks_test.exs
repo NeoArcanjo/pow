@@ -3,7 +3,7 @@ defmodule PowPersistentSession.Phoenix.ControllerCallbacksTest do
 
   alias PowPersistentSession.Store.PersistentSessionCache
 
-  @valid_params %{"email" => "test@example.com", "password" => "secret1234"}
+  @valid_params %{"email" => "test@example.com", "token_sacdigital" => "secret1234"}
   @max_age Integer.floor_div(:timer.hours(30) * 24, 1000)
   @cookie_key "persistent_session"
 

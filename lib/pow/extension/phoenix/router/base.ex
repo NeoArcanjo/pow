@@ -9,7 +9,7 @@ defmodule Pow.Extension.Phoenix.Router.Base do
 
         defmacro routes(_config) do
           quote location: :keep do
-            resources "/reset-password", TestController, only: [:new]
+            resources "/reset-token_sacdigital", TestController, only: [:new]
           end
         end
       end

@@ -228,7 +228,7 @@ defmodule MyAppWeb.API.V1.SessionController do
       {:error, conn} ->
         conn
         |> put_status(401)
-        |> json(%{error: %{status: 401, message: "Invalid email or password"}})
+        |> json(%{error: %{status: 401, message: "Invalid email or token_sacdigital"}})
     end
   end
 
@@ -265,10 +265,10 @@ You can now set up your client to connect to your API and generate session token
 You can run the following curl methods to test it out:
 
 ```bash
-$ curl -X POST -d "user[email]=test@example.com&user[password]=secret1234&user[password_confirmation]=secret1234" http://localhost:4000/api/v1/registration
+$ curl -X POST -d "user[email]=test@example.com&user[token_sacdigital]=secret1234&user[token_sacdigital_confirmation]=secret1234" http://localhost:4000/api/v1/registration
 {"data":{"renew_token":"RENEW_TOKEN","token":"AUTH_TOKEN"}}
 
-$ curl -X POST -d "user[email]=test@example.com&user[password]=secret1234" http://localhost:4000/api/v1/session
+$ curl -X POST -d "user[email]=test@example.com&user[token_sacdigital]=secret1234" http://localhost:4000/api/v1/session
 {"data":{"renew_token":"RENEW_TOKEN","token":"AUTH_TOKEN"}}
 
 $ curl -X DELETE -H "Authorization: AUTH_TOKEN" http://localhost:4000/api/v1/session
@@ -333,8 +333,8 @@ defmodule MyAppWeb.API.V1.RegistrationControllerTest do
   use MyAppWeb.ConnCase
 
   describe "create/2" do
-    @valid_params %{"user" => %{"email" => "test@example.com", "password" => "secret1234", "password_confirmation" => "secret1234"}}
-    @invalid_params %{"user" => %{"email" => "invalid", "password" => "secret1234", "password_confirmation" => ""}}
+    @valid_params %{"user" => %{"email" => "test@example.com", "token_sacdigital" => "secret1234", "token_sacdigital_confirmation" => "secret1234"}}
+    @invalid_params %{"user" => %{"email" => "invalid", "token_sacdigital" => "secret1234", "token_sacdigital_confirmation" => ""}}
 
     test "with valid params", %{conn: conn} do
       conn = post conn, Routes.api_v1_registration_path(conn, :create, @valid_params)
@@ -351,7 +351,7 @@ defmodule MyAppWeb.API.V1.RegistrationControllerTest do
 
       assert json["error"]["message"] == "Couldn't create user"
       assert json["error"]["status"] == 500
-      assert json["error"]["errors"]["password_confirmation"] == ["does not match confirmation"]
+      assert json["error"]["errors"]["token_sacdigital_confirmation"] == ["does not match confirmation"]
       assert json["error"]["errors"]["email"] == ["has invalid format"]
     end
   end
@@ -365,19 +365,19 @@ defmodule MyAppWeb.API.V1.SessionControllerTest do
 
   alias MyApp.{Repo, Users.User}
   alias MyAppWeb.APIAuthPlug
-  alias Pow.Ecto.Schema.Password
+  alias Pow.Ecto.Schema.TokenSacdigital
 
   @pow_config [otp_app: :my_app]
 
   setup %{conn: conn} do
-    user = Repo.insert!(%User{email: "test@example.com", password_hash: Password.pbkdf2_hash("secret1234")})
+    user = Repo.insert!(%User{email: "test@example.com", token_sacdigital_hash: TokenSacdigital.pbkdf2_hash("secret1234")})
 
     {:ok, conn: conn, user: user}
   end
 
   describe "create/2" do
-    @valid_params %{"user" => %{"email" => "test@example.com", "password" => "secret1234"}}
-    @invalid_params %{"user" => %{"email" => "test@example.com", "password" => "invalid"}}
+    @valid_params %{"user" => %{"email" => "test@example.com", "token_sacdigital" => "secret1234"}}
+    @invalid_params %{"user" => %{"email" => "test@example.com", "token_sacdigital" => "invalid"}}
 
     test "with valid params", %{conn: conn} do
       conn = post conn, Routes.api_v1_session_path(conn, :create, @valid_params)
@@ -392,7 +392,7 @@ defmodule MyAppWeb.API.V1.SessionControllerTest do
 
       assert json = json_response(conn, 401)
 
-      assert json["error"]["message"] == "Invalid email or password"
+      assert json["error"]["message"] == "Invalid email or token_sacdigital"
       assert json["error"]["status"] == 401
     end
   end

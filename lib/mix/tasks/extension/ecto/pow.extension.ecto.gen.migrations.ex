@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Pow.Extension.Ecto.Gen.Migrations do
   @moduledoc """
   Generates user migration files for extensions.
 
-      mix pow.extension.ecto.gen.migrations -r MyApp.Repo --extension PowEmailConfirmation --extension PowResetPassword
+      mix pow.extension.ecto.gen.migrations -r MyApp.Repo --extension PowEmailConfirmation --extension PowResetTokenSacdigital
 
       mix pow.extension.ecto.gen.migrations -r MyApp.Repo --extension PowEmailConfirmation Accounts.Account accounts
 

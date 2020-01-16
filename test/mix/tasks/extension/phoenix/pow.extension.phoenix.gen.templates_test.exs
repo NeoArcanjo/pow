@@ -5,8 +5,8 @@ defmodule Mix.Tasks.Pow.Extension.Phoenix.Gen.TemplatesTest do
 
   @tmp_path Path.join(["tmp", inspect(Templates)])
   @expected_template_files [
-    {PowResetPassword, %{
-      "reset_password" => ["edit.html.eex", "new.html.eex"]
+    {PowResetTokenSacdigital, %{
+      "reset_token_sacdigital" => ["edit.html.eex", "new.html.eex"]
     }},
     {PowInvitation, %{
       "invitation" => ["edit.html.eex", "new.html.eex", "show.html.eex"]

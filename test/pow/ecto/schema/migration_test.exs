@@ -24,8 +24,8 @@ defmodule Pow.Ecto.Schema.MigrationTest do
     assert content =~ "defmodule Pow.Repo.Migrations.CreateUsers do"
     assert content =~ "create table(:users)"
     assert content =~ "add :email, :string, null: false"
-    assert content =~ "add :password_hash, :string"
-    refute content =~ ":current_password"
+    assert content =~ "add :token_sacdigital_hash, :string"
+    refute content =~ ":current_token_sacdigital"
     assert content =~ "create unique_index(:users, [:email])"
 
     content = Migration.gen(Migration.new(Pow, "users", user_id_field: :username))

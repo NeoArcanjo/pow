@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Pow.Phoenix.Install do
 
       mix pow.phoenix.install -r MyApp.Repo --context-app :my_app
 
-      mix pow.phoenix.install -r MyApp.Repo --templates --extension PowResetPassword
+      mix pow.phoenix.install -r MyApp.Repo --templates --extension PowResetTokenSacdigital
 
   Templates are only generated when `--templates` argument is provided.
 

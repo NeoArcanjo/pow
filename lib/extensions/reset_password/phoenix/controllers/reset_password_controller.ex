@@ -1,10 +1,10 @@
-defmodule PowResetPassword.Phoenix.ResetPasswordController do
+defmodule PowResetTokenSacdigital.Phoenix.ResetTokenSacdigitalController do
   @moduledoc false
   use Pow.Extension.Phoenix.Controller.Base
 
   alias Plug.Conn
   alias Pow.Plug, as: PowPlug
-  alias PowResetPassword.{Phoenix.Mailer, Plug}
+  alias PowResetTokenSacdigital.{Phoenix.Mailer, Plug}
 
   plug :require_not_authenticated
   plug :load_user_from_reset_token when action in [:edit, :update]
@@ -66,13 +66,13 @@ defmodule PowResetPassword.Phoenix.ResetPasswordController do
 
   @spec process_update(Conn.t(), map()) :: {:ok | :error, map(), Conn.t()}
   def process_update(conn, %{"user" => user_params}) do
-    Plug.update_user_password(conn, user_params)
+    Plug.update_user_token_sacdigital(conn, user_params)
   end
 
   @spec respond_update({:ok, map(), Conn.t()}) :: Conn.t()
   def respond_update({:ok, _user, conn}) do
     conn
-    |> put_flash(:info, extension_messages(conn).password_has_been_reset(conn))
+    |> put_flash(:info, extension_messages(conn).token_sacdigital_has_been_reset(conn))
     |> redirect(to: routes(conn).session_path(conn, :new))
   end
   def respond_update({:error, changeset, conn}) do
@@ -90,12 +90,12 @@ defmodule PowResetPassword.Phoenix.ResetPasswordController do
         |> halt()
 
       user ->
-        Plug.assign_reset_password_user(conn, user)
+        Plug.assign_reset_token_sacdigital_user(conn, user)
     end
   end
 
   defp deliver_email(conn, user, url) do
-    email = Mailer.reset_password(conn, user, url)
+    email = Mailer.reset_token_sacdigital(conn, user, url)
 
     Pow.Phoenix.Mailer.deliver(conn, email)
   end

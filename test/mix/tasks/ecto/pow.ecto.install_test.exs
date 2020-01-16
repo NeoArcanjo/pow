@@ -28,7 +28,7 @@ defmodule Mix.Tasks.Pow.Ecto.InstallTest do
   end
 
   test "generates with schema name and table" do
-    options = @options ++ ~w(Organizations.Organization organizations --extension PowResetPassword --extension PowEmailConfirmation)
+    options = @options ++ ~w(Organizations.Organization organizations --extension PowResetTokenSacdigital --extension PowEmailConfirmation)
 
     File.cd!(@tmp_path, fn ->
       Install.run(options)
@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Pow.Ecto.InstallTest do
   end
 
   test "generates with extensions" do
-    options = @options ++ ~w(--extension PowResetPassword --extension PowEmailConfirmation)
+    options = @options ++ ~w(--extension PowResetTokenSacdigital --extension PowEmailConfirmation)
 
     File.cd!(@tmp_path, fn ->
       Install.run(options)

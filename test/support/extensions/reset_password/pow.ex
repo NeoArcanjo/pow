@@ -1,5 +1,5 @@
-defmodule PowResetPassword.Test do
+defmodule PowResetTokenSacdigital.Test do
   @moduledoc false
   use Pow.Test.ExtensionMocks,
-    extensions: [PowResetPassword]
+    extensions: [PowResetTokenSacdigital]
 end

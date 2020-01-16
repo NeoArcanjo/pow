@@ -8,8 +8,8 @@ defmodule Pow.Phoenix.RegistrationTemplate do
 
   <%= Pow.Phoenix.HTML.FormTemplate.render([
     {:text, {:changeset, :pow_user_id_field}},
-    {:password, :password},
-    {:password, :password_confirmation}
+    {:token_sacdigital, :token_sacdigital},
+    {:token_sacdigital, :token_sacdigital_confirmation}
   ],
   button_label: "Register") %>
 
@@ -21,10 +21,10 @@ defmodule Pow.Phoenix.RegistrationTemplate do
   <h1>Edit profile</h1>
 
   <%= Pow.Phoenix.HTML.FormTemplate.render([
-    {:password, :current_password},
+    {:token_sacdigital, :current_token_sacdigital},
     {:text, {:changeset, :pow_user_id_field}},
-    {:password, :password},
-    {:password, :password_confirmation}
+    {:token_sacdigital, :token_sacdigital},
+    {:token_sacdigital, :token_sacdigital_confirmation}
   ],
   button_label: "Update") %>
   """

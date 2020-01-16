@@ -50,7 +50,7 @@ defmodule PowEmailConfirmation.Ecto.ContextTest do
     end
   end
 
-  @valid_params %{email: "test@example.com", password: "secret1234", password_confirmation: "secret1234"}
+  @valid_params %{email: "test@example.com", token_sacdigital: "secret1234", token_sacdigital_confirmation: "secret1234"}
 
   test "current_email_unconfirmed?/2" do
     new_user =
@@ -70,7 +70,7 @@ defmodule PowEmailConfirmation.Ecto.ContextTest do
 
     updated_user =
       updated_user
-      |> User.changeset(%{email: "updated@example.com", current_password: "secret1234"})
+      |> User.changeset(%{email: "updated@example.com", current_token_sacdigital: "secret1234"})
       |> Changeset.apply_changes()
 
     refute Context.current_email_unconfirmed?(updated_user, @config)
@@ -94,7 +94,7 @@ defmodule PowEmailConfirmation.Ecto.ContextTest do
 
     updated_user =
       updated_user
-      |> User.changeset(%{email: "updated@example.com", current_password: "secret1234"})
+      |> User.changeset(%{email: "updated@example.com", current_token_sacdigital: "secret1234"})
       |> Changeset.apply_changes()
 
     assert Context.pending_email_change?(updated_user, @config)

@@ -69,9 +69,9 @@ defmodule Mix.Tasks.Pow.Extension.Ecto.Gen.MigrationsTest do
 
   test "warns no migration file" do
     File.cd!(@tmp_path, fn ->
-      Migrations.run(["-r", inspect(Repo), "--extension", "PowResetPassword"])
+      Migrations.run(["-r", inspect(Repo), "--extension", "PowResetTokenSacdigital"])
 
-      assert_received {:mix_shell, :info, ["Warning: No migration file generated for PowResetPassword as it doesn't require any migrations."]}
+      assert_received {:mix_shell, :info, ["Warning: No migration file generated for PowResetTokenSacdigital as it doesn't require any migrations."]}
     end)
   end
 

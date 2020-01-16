@@ -136,7 +136,7 @@ defmodule MyAppWeb.SessionController do
         changeset = Pow.Plug.change_user(conn, conn.params["user"])
 
         conn
-        |> put_flash(:info, "Invalid email or password")
+        |> put_flash(:info, "Invalid email or token_sacdigital")
         |> render("new.html", changeset: changeset)
     end
   end
@@ -159,13 +159,13 @@ Create `lib/my_app_web/templates/registration/new.html.eex`:
   <%= email_input f, :email %>
   <%= error_tag f, :email %>
 
-  <%= label f, :password %>
-  <%= password_input f, :password %>
-  <%= error_tag f, :password %>
+  <%= label f, :token_sacdigital %>
+  <%= token_sacdigital_input f, :token_sacdigital %>
+  <%= error_tag f, :token_sacdigital %>
 
-  <%= label f, :password_confirmation %>
-  <%= password_input f, :password_confirmation %>
-  <%= error_tag f, :password_confirmation %>
+  <%= label f, :token_sacdigital_confirmation %>
+  <%= token_sacdigital_input f, :token_sacdigital_confirmation %>
+  <%= error_tag f, :token_sacdigital_confirmation %>
 
   <%= submit "Register" %>
 <% end %>
@@ -178,7 +178,7 @@ Create `lib/my_app_web/templates/session/new.html.eex`:
 
 <%= form_for @changeset, Routes.login_path(@conn, :create), fn f -> %>
   <%= text_input f, :email %>
-  <%= password_input f, :password %>
+  <%= token_sacdigital_input f, :token_sacdigital %>
   <%= submit "Log in" %>
 <% end %>
 ```
@@ -222,7 +222,7 @@ defmodule MyAppWeb.SessionController do
     changeset = Pow.Plug.change_user(conn, conn.params["user"])
 
     conn
-    |> put_flash(:info, "Invalid email or password")
+    |> put_flash(:info, "Invalid email or token_sacdigital")
     |> render("login.html", changeset: changeset)
   end
 

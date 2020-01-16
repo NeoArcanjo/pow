@@ -42,7 +42,7 @@ defmodule ExDoc.Pow.Markdown do
   defp convert_to_docs_html_url("../../../README"), do: "README"
   defp convert_to_docs_html_url("../invitation/README"), do: "pow_invitation"
   defp convert_to_docs_html_url("../email_confirmation/README"), do: "pow_email_confirmation"
-  defp convert_to_docs_html_url("lib/extensions/reset_password/README"), do: "pow_reset_password"
+  defp convert_to_docs_html_url("lib/extensions/reset_token_sacdigital/README"), do: "pow_reset_token_sacdigital"
   defp convert_to_docs_html_url("lib/extensions/email_confirmation/README"), do: "pow_email_confirmation"
   defp convert_to_docs_html_url("lib/extensions/persistent_session/README"), do: "pow_persistent_session"
   defp convert_to_docs_html_url("lib/extensions/invitation/README"), do: "pow_invitation"
