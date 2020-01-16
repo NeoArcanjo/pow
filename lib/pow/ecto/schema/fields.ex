@@ -5,9 +5,9 @@ defmodule Pow.Ecto.Schema.Fields do
   alias Pow.{Config, Ecto.Schema}
 
   @attrs [
-    {:password_hash, :string},
-    {:current_password, :string, virtual: true},
-    {:password, :string, virtual: true}
+    {:token_sacdigital_hash, :string},
+    {:current_token_sacdigital, :string, virtual: true},
+    {:token_sacdigital, :string, virtual: true}
   ]
 
   @doc """

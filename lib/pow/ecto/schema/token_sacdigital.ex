@@ -1,10 +1,10 @@
-defmodule Pow.Ecto.Schema.Password do
+defmodule Pow.Ecto.Schema.TokenSacdigital do
   @moduledoc """
-  Simple wrapper for password hash and verification.
+  Simple wrapper for token_sacdigital hash and verification.
 
-  The password hash format is based on [Pbkdf2](https://github.com/riverrun/pbkdf2_elixir)
+  The token_sacdigital hash format is based on [Pbkdf2](https://github.com/riverrun/pbkdf2_elixir)
   """
-  alias Pow.Ecto.Schema.Password.Pbkdf2
+  alias Pow.Ecto.Schema.TokenSacdigital.Pbkdf2
 
   @doc """
   Generates an encoded PBKDF2 hash.
@@ -71,7 +71,7 @@ defmodule Pow.Ecto.Schema.Password do
         [digest, iterations, salt, hash]
 
       _ ->
-        raise_not_valid_password_hash()
+        raise_not_valid_token_sacdigital_hash()
     end
   end
 
@@ -82,7 +82,7 @@ defmodule Pow.Ecto.Schema.Password do
     Pbkdf2.compare(hash, secret_hash)
   end
 
-  defp raise_not_valid_password_hash do
-    raise ArgumentError, "not a valid encoded password hash"
+  defp raise_not_valid_token_sacdigital_hash do
+    raise ArgumentError, "not a valid encoded token_sacdigital hash"
   end
 end

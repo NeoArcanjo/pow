@@ -9,15 +9,15 @@ defmodule Pow.Ecto.Schema do
   associations in the ecto schema.
 
   The macro will add two overridable methods to your module; `changeset/2`
-  and `verify_password/2`. See the customization section below for more.
+  and `verify_token_sacdigital/2`. See the customization section below for more.
 
   The following helper methods are added for changeset customization:
 
     - `pow_changeset/2`,
-    - `pow_verify_password/2`
+    - `pow_verify_token_sacdigital/2`
     - `pow_user_id_field_changeset/2`
-    - `pow_password_changeset/2`,
-    - `pow_current_password_changeset/2`,
+    - `pow_token_sacdigital_changeset/2`,
+    - `pow_current_token_sacdigital_changeset/2`,
 
   Finally `pow_user_id_field/0` method is added to the module that is used to
   fetch the user id field name.
@@ -33,10 +33,10 @@ defmodule Pow.Ecto.Schema do
         use Ecto.Schema
         use Pow.Ecto.Schema,
           user_id_field: :email,
-          password_hash_methods: {&Pow.Ecto.Schema.Password.pbkdf2_hash/1,
-                                  &Pow.Ecto.Schema.Password.pbkdf2_verify/2},
-          password_min_length: 8,
-          password_max_length: 4096
+          token_sacdigital_hash_methods: {&Pow.Ecto.Schema.token_sacdigital.pbkdf2_hash/1,
+                                  &Pow.Ecto.Schema.token_sacdigital.pbkdf2_verify/2},
+          token_sacdigital_min_length: 8,
+          token_sacdigital_max_length: 4096
 
         schema "users" do
           field :custom_field, :string
@@ -67,8 +67,8 @@ defmodule Pow.Ecto.Schema do
         use Pow.Ecto.Schema
 
         schema "users" do
-          field :encrypted_password, :string
-          field :password_hash, :string, source: :encrypted_password
+          field :encrypted_token_sacdigital, :string
+          field :token_sacdigital_hash, :string, source: :encrypted_token_sacdigital
 
           pow_user_fields()
 
@@ -98,21 +98,21 @@ defmodule Pow.Ecto.Schema do
 
   You can extract individual changeset methods to modify the changeset flow
   entirely. As an example, this is how you can remove the validation check for
-  confirm password in the changeset method:
+  confirm token_sacdigital in the changeset method:
 
       defmodule MyApp.Users.User do
         use Ecto.Schema
         use Pow.Ecto.Schema
 
-        import Pow.Ecto.Schema.Changeset, only: [new_password_changeset: 3]
+        import Pow.Ecto.Schema.Changeset, only: [new_token_sacdigital_changeset: 3]
 
         # ...
 
         def changeset(user_or_changeset, attrs) do
           user_or_changeset
           |> pow_user_id_field_changeset(attrs)
-          |> pow_current_password_changeset(attrs)
-          |> new_password_changeset(attrs, @pow_config)
+          |> pow_current_token_sacdigital_changeset(attrs)
+          |> new_token_sacdigital_changeset(attrs, @pow_config)
         end
       end
 
@@ -125,7 +125,7 @@ defmodule Pow.Ecto.Schema do
   alias Pow.Config
 
   @callback changeset(Ecto.Schema.t() | Changeset.t(), map()) :: Changeset.t()
-  @callback verify_password(Ecto.Schema.t(), binary()) :: boolean()
+  @callback verify_token_sacdigital(Ecto.Schema.t(), binary()) :: boolean()
 
   @doc false
   defmacro __using__(config) do
@@ -136,8 +136,8 @@ defmodule Pow.Ecto.Schema do
       @spec changeset(Ecto.Schema.t() | Changeset.t(), map()) :: Changeset.t()
       def changeset(user_or_changeset, attrs), do: pow_changeset(user_or_changeset, attrs)
 
-      @spec verify_password(Ecto.Schema.t(), binary()) :: boolean()
-      def verify_password(user, password), do: pow_verify_password(user, password)
+      @spec verify_token_sacdigital(Ecto.Schema.t(), binary()) :: boolean()
+      def verify_token_sacdigital(user, token_sacdigital), do: pow_verify_token_sacdigital(user, token_sacdigital)
 
       defoverridable unquote(__MODULE__)
 
@@ -148,7 +148,7 @@ defmodule Pow.Ecto.Schema do
     end
   end
 
-  @changeset_methods [:user_id_field_changeset, :password_changeset, :current_password_changeset]
+  @changeset_methods [:user_id_field_changeset, :token_sacdigital_changeset, :current_token_sacdigital_changeset]
 
   @doc false
   defmacro __pow_methods__ do
@@ -171,15 +171,15 @@ defmodule Pow.Ecto.Schema do
       def pow_changeset(user_or_changeset, attrs) do
         user_or_changeset
         |> pow_user_id_field_changeset(attrs)
-        |> pow_current_password_changeset(attrs)
-        |> pow_password_changeset(attrs)
+        |> pow_current_token_sacdigital_changeset(attrs)
+        |> pow_token_sacdigital_changeset(attrs)
       end
 
       unquote(quoted_changeset_methods)
 
-      @spec pow_verify_password(Ecto.Schema.t(), binary()) :: boolean()
-      def pow_verify_password(user, password) do
-        unquote(__MODULE__).Changeset.verify_password(user, password, @pow_config)
+      @spec pow_verify_token_sacdigital(Ecto.Schema.t(), binary()) :: boolean()
+      def pow_verify_token_sacdigital(user, token_sacdigital) do
+        unquote(__MODULE__).Changeset.verify_token_sacdigital(user, token_sacdigital, @pow_config)
       end
     end
   end
@@ -192,9 +192,9 @@ defmodule Pow.Ecto.Schema do
   have at minimum the following fields:
 
     * `:email` (if not changed with `:user_id_field` option)
-    * `:password_hash`
-    * `:current_password` (virtual)
-    * `:password` (virtual)
+    * `:token_sacdigital_hash`
+    * `:current_token_sacdigital` (virtual)
+    * `:token_sacdigital` (virtual)
   """
   defmacro pow_user_fields do
     quote do

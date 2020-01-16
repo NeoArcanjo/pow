@@ -1,4 +1,4 @@
-defmodule Pow.Ecto.Schema.Password.Pbkdf2 do
+defmodule Pow.Ecto.Schema.TokenSacdigital.Pbkdf2 do
   @moduledoc """
   The Pbkdf2 hash generation code is pulled from
   [Plug.Crypto.KeyGenerator](https://github.com/elixir-plug/plug/blob/v1.6.1/lib/plug/crypto/key_generator.ex#L1)

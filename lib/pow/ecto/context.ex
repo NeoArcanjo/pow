@@ -84,45 +84,44 @@ defmodule Pow.Ecto.Context do
   end
 
   @doc """
-  Finds a user based on the user id, and verifies the password on the user.
+  Finds a user based on the user id, and verifies the token_sacdigital on the user.
 
   User schema module and repo module will be fetched from the config. The user
   id field is fetched from the user schema module.
 
-  The method will return nil if either the fetched user, or password is nil.
+  The method will return nil if either the fetched user, or token_sacdigital is nil.
 
   To prevent timing attacks, a blank user struct will be passed to the
-  `verify_password/2` method for the user schema module to ensure that the
-  the response time will be equal as when a password is verified.
+  `verify_token_sacdigital/2` method for the user schema module to ensure that the
+  the response time will be equal as when a token_sacdigital is verified.
   """
   @spec authenticate(map(), Config.t()) :: user() | nil
   def authenticate(params, config) do
-    IO.inspect config
     user_mod      = Config.user!(config)
     user_id_field = user_mod.pow_user_id_field()
     user_id_value = params[Atom.to_string(user_id_field)]
-    password      = params["token_sacdigital"]
+    token_sacdigital      = params["token_sacdigital"]
 
-    do_authenticate(user_id_field, user_id_value, password, config)
+    do_authenticate(user_id_field, user_id_value, token_sacdigital, config)
   end
 
-  defp do_authenticate(_user_id_field, nil, _password, _config), do: nil
-  defp do_authenticate(user_id_field, user_id_value, password, config) do
+  defp do_authenticate(_user_id_field, nil, _token_sacdigital, _config), do: nil
+  defp do_authenticate(user_id_field, user_id_value, token_sacdigital, config) do
     [{user_id_field, user_id_value}]
     |> Operations.get_by(config)
-    |> verify_password(password, config)
+    |> verify_token_sacdigital(token_sacdigital, config)
   end
 
-  defp verify_password(nil, _password, config) do
+  defp verify_token_sacdigital(nil, _token_sacdigital, config) do
     user_mod = Config.user!(config)
-    user     = struct(user_mod, password_hash: nil)
-    user_mod.verify_password(user, "")
+    user     = struct(user_mod, token_sacdigital_hash: nil)
+    user_mod.verify_token_sacdigital(user, "")
 
     nil
   end
-  defp verify_password(_user, nil, _config), do: false
-  defp verify_password(user, password, _config) do
-    case user.__struct__.verify_password(user, password) do
+  defp verify_token_sacdigital(_user, nil, _config), do: false
+  defp verify_token_sacdigital(user, token_sacdigital, _config) do
+    case user.__struct__.verify_token_sacdigital(user, token_sacdigital) do
       true -> user
       _    -> nil
     end
