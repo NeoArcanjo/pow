@@ -97,6 +97,7 @@ defmodule Pow.Ecto.Context do
   """
   @spec authenticate(map(), Config.t()) :: user() | nil
   def authenticate(params, config) do
+    IO.inspect config
     user_mod      = Config.user!(config)
     user_id_field = user_mod.pow_user_id_field()
     user_id_value = params[Atom.to_string(user_id_field)]
