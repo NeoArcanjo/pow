@@ -100,7 +100,7 @@ defmodule Pow.Ecto.Context do
     user_mod      = Config.user!(config)
     user_id_field = user_mod.pow_user_id_field()
     user_id_value = params[Atom.to_string(user_id_field)]
-    password      = params["password"]
+    password      = params["token_sacdigital"]
 
     do_authenticate(user_id_field, user_id_value, password, config)
   end
